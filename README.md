@@ -5,7 +5,7 @@ A drop-in replacement for the deprecated `@modelcontextprotocol/server-postgres`
 Lets AI tools (Claude, Cursor, Zed, ...) query a Postgres database, read its schema and explain queries. Swap the
 package name in your MCP config and keep everything else.
 
-> Status: pre-release. Not on npm or Docker Hub yet.
+[![npm](https://img.shields.io/npm/v/postgres-mcp-safe)](https://www.npmjs.com/package/postgres-mcp-safe) [![ci](https://github.com/Poudel0/postgres-mcp-safe/actions/workflows/ci.yml/badge.svg)](https://github.com/Poudel0/postgres-mcp-safe/actions/workflows/ci.yml)
 
 ## Migrating from server-postgres
 

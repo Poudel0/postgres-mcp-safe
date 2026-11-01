@@ -14,7 +14,8 @@ try {
   console.error(
     `postgres-mcp-safe: no binary for ${process.platform}-${process.arch} (${pkg} is not installed).\n` +
       "Supported: linux-x64, linux-arm64, darwin-x64, darwin-arm64, win32-x64. " +
-      "If you installed with --no-optional, reinstall without it.",
+      "npm skips this package silently if it can't fetch it, and npx then caches the broken install.\n" +
+      "Fix: reinstall without --no-optional / --omit=optional, or for npx clear its cache (rm -rf ~/.npm/_npx) and retry.",
   );
   process.exit(1);
 }
