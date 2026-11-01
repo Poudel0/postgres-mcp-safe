@@ -1,0 +1,14 @@
+{
+  "name": "postgres-mcp-safe",
+  "version": "0.0.0",
+  "description": "Drop-in replacement for @modelcontextprotocol/server-postgres that is actually read-only.",
+  "keywords": ["mcp", "model-context-protocol", "postgres", "postgresql", "read-only", "server-postgres"],
+  "homepage": "https://github.com/Poudel0/postgres-mcp-safe",
+  "repository": { "type": "git", "url": "git+https://github.com/Poudel0/postgres-mcp-safe.git" },
+  "license": "MIT",
+  "mcpName": "io.github.Poudel0/postgres-mcp-safe",
+  "bin": { "postgres-mcp-safe": "bin/postgres-mcp-safe.js" },
+  "files": ["bin"],
+  "engines": { "node": ">=18" },
+  "optionalDependencies": {}
+}

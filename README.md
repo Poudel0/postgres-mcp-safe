@@ -21,7 +21,8 @@ package name in your MCP config and keep everything else.
  }
 ```
 
-Docker: `docker run -i --rm postgres-mcp-safe postgresql://host.docker.internal:5432/mydb`.
+Docker: `docker run -i --rm ghcr.io/poudel0/postgres-mcp-safe postgresql://host.docker.internal:5432/mydb`.
+Binaries for Linux, macOS and Windows are on the [releases page](https://github.com/Poudel0/postgres-mcp-safe/releases).
 
 **One catch:** if your URL logs in as a superuser (like Docker's default `postgres` user), every call is refused
 until you either [create a read-only role](#use-a-read-only-role-too) (recommended) or add `--allow-superuser`

@@ -1,0 +1,28 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.Poudel0/postgres-mcp-safe",
+  "title": "Postgres (read-only, safe)",
+  "description": "Drop-in replacement for @modelcontextprotocol/server-postgres that is actually read-only.",
+  "version": "0.0.0",
+  "repository": { "url": "https://github.com/Poudel0/postgres-mcp-safe", "source": "github" },
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "postgres-mcp-safe",
+      "version": "0.0.0",
+      "runtimeHint": "npx",
+      "transport": { "type": "stdio" },
+      "packageArguments": [
+        { "type": "positional", "valueHint": "postgresql_url", "description": "Postgres connection URL. Use a read-only role.", "isRequired": true }
+      ]
+    },
+    {
+      "registryType": "oci",
+      "identifier": "ghcr.io/poudel0/postgres-mcp-safe:0.0.0",
+      "transport": { "type": "stdio" },
+      "packageArguments": [
+        { "type": "positional", "valueHint": "postgresql_url", "description": "Postgres connection URL. Use a read-only role.", "isRequired": true }
+      ]
+    }
+  ]
+}

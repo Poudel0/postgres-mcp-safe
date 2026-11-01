@@ -8,7 +8,15 @@ Go binary, MCP over stdio, read-only enforced by Postgres itself.
   truth. When code and spec disagree, stop and ask which one is wrong.
 
 Status (2026-11-01): v1 core built and tested (PG 14, 17, 18). Name: `postgres-mcp-safe`, module
-`github.com/Poudel0/postgres-mcp-safe`. Not done: npm shim, GoReleaser, MCP registry/Glama files, publishing.
+`github.com/Poudel0/postgres-mcp-safe`. Packaging built and tested locally; nothing published yet.
+
+## Releasing
+
+Push a `vX.Y.Z` tag; `.github/workflows/release.yml` runs tests, GoReleaser, npm, ghcr.io and the MCP
+registry, in that order (the registry checks the npm package and image exist). Needs repo secret
+`NPM_TOKEN`. Local dry run: `go run github.com/goreleaser/goreleaser/v2@v2.19.0 release --snapshot --clean`
+then `node npm/build.mjs 0.0.0-snapshot`. Versions in `server.json` and `npm/*/package.json` are
+placeholders stamped at release; don't bump them by hand.
 
 ## Stack
 
@@ -18,7 +26,7 @@ Don't add dependencies without asking. No testcontainers, no config libs, no SQL
 ## Layout
 
 One `main` package, four files, no interfaces (one DB, one transport):
-`main.go` (flags, URL, run), `db.go` (`readOnly`, `runQuery`), `tools.go`, `resources.go`.
+`main.go` (flags, URL, run), `db.go` (`readOnly`, `userQuery`, `fixedQuery`), `tools.go`, `resources.go`.
 A fifth file needs a reason.
 
 ## Safety rules (never break these)
