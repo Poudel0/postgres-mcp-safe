@@ -1,0 +1,39 @@
+{
+  "QueryTool": {
+    "description": "Run a read-only SQL query",
+    "inputSchema": {
+      "properties": {
+        "sql": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "name": "query"
+  },
+  "Resources": [
+    {
+      "mimeType": "application/json",
+      "name": "\"canary\" database schema",
+      "uri": "postgres://BASE/canary/schema"
+    },
+    {
+      "mimeType": "application/json",
+      "name": "\"orders\" database schema",
+      "uri": "postgres://BASE/orders/schema"
+    },
+    {
+      "mimeType": "application/json",
+      "name": "\"users\" database schema",
+      "uri": "postgres://BASE/users/schema"
+    }
+  ],
+  "ReadUsers": "[\n  {\n    \"column_name\": \"id\",\n    \"data_type\": \"bigint\"\n  },\n  {\n    \"column_name\": \"email\",\n    \"data_type\": \"text\"\n  },\n  {\n    \"column_name\": \"score\",\n    \"data_type\": \"numeric\"\n  },\n  {\n    \"column_name\": \"ratio\",\n    \"data_type\": \"double precision\"\n  },\n  {\n    \"column_name\": \"active\",\n    \"data_type\": \"boolean\"\n  },\n  {\n    \"column_name\": \"created_at\",\n    \"data_type\": \"timestamp with time zone\"\n  },\n  {\n    \"column_name\": \"born\",\n    \"data_type\": \"date\"\n  },\n  {\n    \"column_name\": \"avatar\",\n    \"data_type\": \"bytea\"\n  },\n  {\n    \"column_name\": \"meta\",\n    \"data_type\": \"jsonb\"\n  },\n  {\n    \"column_name\": \"tags\",\n    \"data_type\": \"ARRAY\"\n  },\n  {\n    \"column_name\": \"ext_id\",\n    \"data_type\": \"uuid\"\n  },\n  {\n    \"column_name\": \"id\",\n    \"data_type\": \"integer\"\n  },\n  {\n    \"column_name\": \"secret\",\n    \"data_type\": \"text\"\n  }\n]",
+  "QueryOutputs": {
+    "SELECT 'NaN'::float8 AS e": "[\n  {\n    \"e\": null\n  }\n]",
+    "SELECT * FROM canary WHERE false": "[]",
+    "SELECT * FROM users ORDER BY id": "[\n  {\n    \"id\": \"1\",\n    \"email\": \"a@example.com\",\n    \"score\": \"12.50\",\n    \"ratio\": 0.5,\n    \"active\": true,\n    \"created_at\": \"2026-01-02T03:04:05.000Z\",\n    \"born\": \"1990-05-05T18:15:00.000Z\",\n    \"avatar\": {\n      \"type\": \"Buffer\",\n      \"data\": [\n        1,\n        2\n      ]\n    },\n    \"meta\": {\n      \"k\": 1\n    },\n    \"tags\": [\n      \"x\",\n      \"y\"\n    ],\n    \"ext_id\": \"00000000-0000-0000-0000-000000000001\"\n  },\n  {\n    \"id\": \"2\",\n    \"email\": \"b@example.com\",\n    \"score\": null,\n    \"ratio\": null,\n    \"active\": false,\n    \"created_at\": \"2026-02-03T04:05:06.000Z\",\n    \"born\": null,\n    \"avatar\": null,\n    \"meta\": null,\n    \"tags\": null,\n    \"ext_id\": null\n  }\n]",
+    "SELECT 1 AS a, 'x\u003c\u0026\u003e' AS b, true AS c, NULL AS d": "[\n  {\n    \"a\": 1,\n    \"b\": \"x\u003c\u0026\u003e\",\n    \"c\": true,\n    \"d\": null\n  }\n]",
+    "SELECT id, note FROM canary": "[\n  {\n    \"id\": 1,\n    \"note\": \"alive\"\n  }\n]"
+  }
+}
