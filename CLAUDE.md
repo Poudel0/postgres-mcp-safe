@@ -13,8 +13,10 @@ Status (2026-11-01): v1 core built and tested (PG 14, 17, 18). Name: `postgres-m
 ## Releasing
 
 Push a `vX.Y.Z` tag; `.github/workflows/release.yml` runs tests, GoReleaser, npm, ghcr.io and the MCP
-registry, in that order (the registry checks the npm package and image exist). Needs repo secret
-`NPM_TOKEN`. Local dry run: `go run github.com/goreleaser/goreleaser/v2@v2.19.0 release --snapshot --clean`
+registry, in that order (the registry checks the npm package and image exist). npm uses trusted
+publishing (OIDC, no token), set per package with `npm trust github`. A brand-new npm package (e.g.
+a new platform) must be published once by hand first; trust can't be set on a package that doesn't
+exist. Re-running a release run uses the workflow from the tagged commit, so fix and tag anew. Local dry run: `go run github.com/goreleaser/goreleaser/v2@v2.19.0 release --snapshot --clean`
 then `node npm/build.mjs 0.0.0-snapshot`. Versions in `server.json` and `npm/*/package.json` are
 placeholders stamped at release; don't bump them by hand.
 
