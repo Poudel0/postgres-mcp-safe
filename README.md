@@ -49,6 +49,10 @@ Flags go **before** the URL.
 | `--allow-explain-analyze` | off | Lets `explain` run `EXPLAIN ANALYZE`, which executes the query. |
 | `--allow-superuser` | off | Allows a superuser role, or a member of one. Read-only is then **not** guaranteed. |
 
+Each call opens a fresh connection (that's part of the safety model). Against a remote database over TLS that costs a
+few round trips: about 0.5 s per call at 50 ms latency. On Postgres 17+ you can save one round trip by adding
+`sslnegotiation=direct` to the URL.
+
 Limits can't be turned off; `0` is an error. The URL can also be a keyword DSN (`host=db dbname=app`), and the
 standard `PG*` environment variables (`PGPASSWORD`, ...) are read as libpq would.
 

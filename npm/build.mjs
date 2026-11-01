@@ -1,9 +1,12 @@
 // Builds the npm packages from GoReleaser's dist/ into npm/out/:
 // one package per platform holding its binary, plus the main package whose
 // optionalDependencies pull in the right one (esbuild's pattern, SPEC §9).
+// Also lays out an MCPB bundle (for Smithery and Claude Desktop) in
+// npm/out/mcpb: the same launcher with all platform packages beside it, since
+// MCPB can pick an OS but not a CPU architecture.
 //
 //   node npm/build.mjs <version>
-import { chmodSync, copyFileSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { chmodSync, copyFileSync, cpSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
 const version = process.argv[2]?.replace(/^v/, "");
@@ -61,4 +64,13 @@ chmodSync(join(mainDir, "bin", "postgres-mcp-safe.js"), 0o755);
 copyFileSync("README.md", join(mainDir, "README.md"));
 copyFileSync("LICENSE", join(mainDir, "LICENSE"));
 writeFileSync(join(mainDir, "package.json"), JSON.stringify({ ...main, version }, null, 2) + "\n");
-console.log(`built ${binaries.length + 1} packages in ${out}`);
+
+const bundle = join(out, "mcpb");
+for (const name of Object.keys(main.optionalDependencies)) {
+  cpSync(join(out, name), join(bundle, "server", "node_modules", name), { recursive: true });
+}
+copyFileSync("npm/postgres-mcp-safe/bin/postgres-mcp-safe.js", join(bundle, "server", "postgres-mcp-safe.js"));
+copyFileSync("LICENSE", join(bundle, "LICENSE"));
+const manifest = JSON.parse(readFileSync("npm/mcpb/manifest.json", "utf8"));
+writeFileSync(join(bundle, "manifest.json"), JSON.stringify({ ...manifest, version }, null, 2) + "\n");
+console.log(`built ${binaries.length + 1} packages and an MCPB bundle dir in ${out}`);

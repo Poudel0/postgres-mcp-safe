@@ -17,8 +17,21 @@ registry, in that order (the registry checks the npm package and image exist). n
 publishing (OIDC, no token), set per package with `npm trust github`. A brand-new npm package (e.g.
 a new platform) must be published once by hand first; trust can't be set on a package that doesn't
 exist. Re-running a release run uses the workflow from the tagged commit, so fix and tag anew. Local dry run: `go run github.com/goreleaser/goreleaser/v2@v2.19.0 release --snapshot --clean`
-then `node npm/build.mjs 0.0.0-snapshot`. Versions in `server.json` and `npm/*/package.json` are
+then `node npm/build.mjs 0.0.0-snapshot`. That also lays out the MCPB bundle (Smithery, Claude
+Desktop) in `npm/out/mcpb`; pack it with `npx -y @anthropic-ai/mcpb@2.1.2 pack npm/out/mcpb x.mcpb`.
+MCPB is not in `release.yml` yet: publish to Smithery by hand with `npx -y smithery mcp publish`. Versions in `server.json` and `npm/*/package.json` are
 placeholders stamped at release; don't bump them by hand.
+
+## Launch tracking (90 days: 2026-11-01 to 2027-01-30)
+
+Targets from SCOPE: 2,000 npm downloads/week, 500 GitHub stars, 0 bypass reports that hold up.
+Baseline 2026-11-01: 0 / 0 / 0 (old server: 179,957/week).
+
+```sh
+curl -s https://api.npmjs.org/downloads/point/last-week/postgres-mcp-safe   # lags 1-2 days
+gh api repos/Poudel0/postgres-mcp-safe -q .stargazers_count
+gh issue list -R Poudel0/postgres-mcp-safe --state all --search bypass
+```
 
 ## Stack
 
@@ -81,3 +94,7 @@ These are the product. Each one maps to a SPEC §6 layer and a bypass test.
 - go-sdk drops in-flight responses when stdin closes, so `printf ... | binary` loses answers. Hold
   stdin open (`(printf ...; sleep 1) | ...`) when poking it by hand. Real clients are fine.
 - go-sdk adds `ttlMs`/`cacheScope` to list results even on protocol 2024-11-05. Harmless extra fields.
+- Release race (seen on 0.1.1 and 0.1.2, not fixed yet): the main npm package goes out seconds after
+  the platform packages, and npm's CDN can lag ~1 min. An `npx` in that window silently skips the
+  missing optional package and caches a broken install. Fix when next touching `release.yml`: wait
+  until `npm view <pkg>@<version>` finds all 5 platform packages before publishing the main one.

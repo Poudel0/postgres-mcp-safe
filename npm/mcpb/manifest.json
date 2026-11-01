@@ -1,0 +1,36 @@
+{
+  "manifest_version": "0.4",
+  "name": "postgres-mcp-safe",
+  "display_name": "Postgres (read-only, safe)",
+  "version": "0.0.0",
+  "description": "Drop-in replacement for @modelcontextprotocol/server-postgres that is actually read-only.",
+  "author": { "name": "Sandesh Poudel", "url": "https://github.com/Poudel0" },
+  "repository": { "type": "git", "url": "https://github.com/Poudel0/postgres-mcp-safe" },
+  "homepage": "https://github.com/Poudel0/postgres-mcp-safe",
+  "license": "MIT",
+  "keywords": ["postgres", "postgresql", "sql", "database", "read-only"],
+  "server": {
+    "type": "node",
+    "entry_point": "server/postgres-mcp-safe.js",
+    "mcp_config": {
+      "command": "node",
+      "args": ["${__dirname}/server/postgres-mcp-safe.js", "${user_config.database_url}"]
+    }
+  },
+  "tools": [
+    { "name": "query", "description": "Run a read-only SQL query" },
+    { "name": "list_tables", "description": "List tables and views, with their schema and type." },
+    { "name": "describe_table", "description": "Describe a table or view: columns, constraints and indexes." },
+    { "name": "explain", "description": "Show the query plan for one SQL statement." }
+  ],
+  "compatibility": { "platforms": ["darwin", "linux", "win32"], "runtimes": { "node": ">=18" } },
+  "user_config": {
+    "database_url": {
+      "type": "string",
+      "title": "Postgres connection URL",
+      "description": "For example postgresql://mcp_ro:password@localhost:5432/mydb. Use a read-only role: superusers are refused.",
+      "required": true,
+      "sensitive": true
+    }
+  }
+}

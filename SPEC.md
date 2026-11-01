@@ -215,7 +215,7 @@ Setting a limit to 0 is an error, not "off" (scope: none of them off). New tools
 |---|---|---|
 | Q1 | Package name and npm scope. Blocks the npm, registry and Docker names. | Pick an unscoped, searchable name with "postgres" and "mcp" in it. |
 | Q2 | Superuser connections: warn (drop-in friendly) or refuse (safer)? | **Decided 2026-11-01: refuse by default, `--allow-superuser` to opt in.** The `lo_export` file write (layer 8) is a real bypass in the default setup. Cost: the default Docker `postgres` user needs the flag or a role. |
-| Q3 | Connect-per-call cost on remote TLS databases (UNVERIFIED). | Measure in the spike. If it's over ~300 ms, keep one idle connection and `DISCARD ALL` between calls. |
+| Q3 | Connect-per-call cost on remote TLS databases. | **Measured 2026-11-01** (PG 17, TLS 1.3, SCRAM, toxiproxy at 50 ms RTT): connect 321 ms (~6 RTT), full `query` call 583 ms; 533 ms with `sslnegotiation=direct`. Local: 14 ms. **Decision: keep a fresh connection per call.** Model time per tool call is seconds, so 0.5 s doesn't matter, and reuse weakens layer 4 (`DISCARD ALL` doesn't close `dblink` connections, for one). If it ever matters: pipeline `BEGIN` + setup + `Parse` into one round trip (~2 RTT saved, no safety cost). |
 | Q4 | Defaults of 30s / 1000 rows / 256 KiB are judgement calls. | Keep; revisit after real usage. |
 | Q5 | Should the connection URL also be readable from an env var, to keep passwords out of argv? | Not in v1 (nobody asked). Easy to add later. |
 | R1 | Dynamic `resources/list` uses go-sdk receiving middleware, which is documented for auth and logging, not for overriding a method. | Confirm it works in a day-1 spike. Fallback: list tables at startup and register them as static resources. |
