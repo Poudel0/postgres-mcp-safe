@@ -17,12 +17,7 @@
       "args": ["${__dirname}/server/postgres-mcp-safe.js", "${user_config.database_url}"]
     }
   },
-  "tools": [
-    { "name": "query", "description": "Run a read-only SQL query" },
-    { "name": "list_tables", "description": "List tables and views, with their schema and type." },
-    { "name": "describe_table", "description": "Describe a table or view: columns, constraints and indexes." },
-    { "name": "explain", "description": "Show the query plan for one SQL statement." }
-  ],
+  "tools_generated": true,
   "compatibility": { "platforms": ["darwin", "linux", "win32"], "runtimes": { "node": ">=18" } },
   "user_config": {
     "database_url": {

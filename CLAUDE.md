@@ -19,7 +19,9 @@ a new platform) must be published once by hand first; trust can't be set on a pa
 exist. Re-running a release run uses the workflow from the tagged commit, so fix and tag anew. Local dry run: `go run github.com/goreleaser/goreleaser/v2@v2.19.0 release --snapshot --clean`
 then `node npm/build.mjs 0.0.0-snapshot`. That also lays out the MCPB bundle (Smithery, Claude
 Desktop) in `npm/out/mcpb`; pack it with `npx -y @anthropic-ai/mcpb@2.1.2 pack npm/out/mcpb x.mcpb`.
-MCPB is not in `release.yml` yet: publish to Smithery by hand with `npx -y smithery mcp publish`. Versions in `server.json` and `npm/*/package.json` are
+MCPB is not in `release.yml` yet: publish to Smithery by hand with `npx -y smithery mcp publish`.
+Keep `tools` out of the MCPB manifest: Smithery needs `inputSchema` on tools and MCPB forbids it, so
+use `tools_generated`. Smithery caps bundles at 25 MB (currently 20.5 MB with all five binaries). Versions in `server.json` and `npm/*/package.json` are
 placeholders stamped at release; don't bump them by hand.
 
 ## Launch tracking (90 days: 2026-11-01 to 2027-01-30)
