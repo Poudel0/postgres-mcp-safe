@@ -1,7 +1,7 @@
 // Builds the npm packages from GoReleaser's dist/ into npm/out/:
 // one package per platform holding its binary, plus the main package whose
 // optionalDependencies pull in the right one (esbuild's pattern, SPEC §9).
-// Also lays out an MCPB bundle (for Smithery and Claude Desktop) in
+// Also lays out an MCPB bundle (for Claude Desktop) in
 // npm/out/mcpb: the same launcher with all platform packages beside it, since
 // MCPB can pick an OS but not a CPU architecture.
 //

@@ -51,7 +51,7 @@ easiest switch *and* actually safe.
 
 ## How people find it
 
-- MCP directories (the official MCP registry, Glama, Smithery). **Check how each one lists
+- MCP directories (the official MCP registry, Glama). **Check how each one lists
   servers.**
 - npm search for "postgres mcp".
 - The open issue on the servers repo about the archived servers (#4785), and the deprecated

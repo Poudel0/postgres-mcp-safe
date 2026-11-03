@@ -206,7 +206,6 @@ Setting a limit to 0 is an error, not "off" (scope: none of them off). New tools
 | Docker | `gcr.io/distroless/static` base (has CA certs), non-root, `ENTRYPOINT ["/<pkg>"]`, `LABEL io.modelcontextprotocol.server.name="io.github.<user>/<pkg>"`. |
 | MCP registry | `server.json` with an `npm` package (`transport: stdio`, one `packageArguments` entry `type: positional`, `isRequired: true`, `valueHint: postgresql_url`) and an `oci` package. Then `mcp-publisher login github` and `mcp-publisher publish`. With GitHub auth the name must start with `io.github.<user>/`. |
 | Glama | Indexes GitHub repos. Add `glama.json` with `maintainers: ["<user>"]` at the repo root, then run its claim flow. |
-| Smithery | Current flow for local stdio servers is UNVERIFIED (docs point to `smithery mcp publish` or an MCPB bundle). Check before launch. |
 | Old users | Comment on issue #4785 with the one-line config change; README section "Migrating from server-postgres". |
 
 ## 10. Open questions and risks
