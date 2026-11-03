@@ -95,7 +95,7 @@ These are the product. Each one maps to a SPEC §6 layer and a bypass test.
 - go-sdk drops in-flight responses when stdin closes, so `printf ... | binary` loses answers. Hold
   stdin open (`(printf ...; sleep 1) | ...`) when poking it by hand. Real clients are fine.
 - go-sdk adds `ttlMs`/`cacheScope` to list results even on protocol 2024-11-05. Harmless extra fields.
-- Release race (seen on 0.1.1 and 0.1.2, not fixed yet): the main npm package goes out seconds after
-  the platform packages, and npm's CDN can lag ~1 min. An `npx` in that window silently skips the
-  missing optional package and caches a broken install. Fix when next touching `release.yml`: wait
-  until `npm view <pkg>@<version>` finds all 5 platform packages before publishing the main one.
+- Release race (seen on 0.1.1 and 0.1.2): npm's CDN can lag ~1 min, and an `npx` that beats the
+  platform packages silently skips the missing optional package and caches a broken install.
+  `release.yml` now waits until `npm view` finds all 5 before publishing the main package. Not yet
+  proven by a real release; a timeout there burns the tag (platform packages are out), so tag anew.

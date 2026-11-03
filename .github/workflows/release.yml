@@ -50,6 +50,16 @@ jobs:
           npm install -g npm@11.19.0
           node npm/build.mjs "$VERSION"
           for d in npm/out/postgres-mcp-safe-*/; do npm publish "$d" --access public; done
+          # npm's CDN can lag, and an npx in that window silently caches an install with no binary.
+          for d in npm/out/postgres-mcp-safe-*/; do
+            pkg=$(basename "$d")
+            for _ in {1..60}; do
+              npm view "$pkg@$VERSION" version >/dev/null 2>&1 && continue 2
+              sleep 5
+            done
+            echo "::error::$pkg@$VERSION not visible on npm after 5 minutes; main package not published"
+            exit 1
+          done
           npm publish npm/out/postgres-mcp-safe --access public
 
       - uses: docker/setup-buildx-action@v4
