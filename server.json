@@ -1,7 +1,7 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.Poudel0/postgres-mcp-safe",
-  "title": "Postgres (read-only, safe)",
+  "title": "Postgres (read-only transactions)",
   "description": "Drop-in replacement for @modelcontextprotocol/server-postgres that is actually read-only.",
   "version": "0.0.0",
   "repository": { "url": "https://github.com/Poudel0/postgres-mcp-safe", "source": "github" },

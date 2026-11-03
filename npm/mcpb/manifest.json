@@ -1,7 +1,7 @@
 {
   "manifest_version": "0.4",
   "name": "postgres-mcp-safe",
-  "display_name": "Postgres (read-only, safe)",
+  "display_name": "Postgres (read-only transactions)",
   "version": "0.0.0",
   "description": "Drop-in replacement for @modelcontextprotocol/server-postgres that is actually read-only.",
   "author": { "name": "Sandesh Poudel", "url": "https://github.com/Poudel0" },
