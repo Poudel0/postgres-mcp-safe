@@ -7,6 +7,8 @@ package name in your MCP config and keep everything else.
 
 [![npm](https://img.shields.io/npm/v/postgres-mcp-safe)](https://www.npmjs.com/package/postgres-mcp-safe) [![ci](https://github.com/Poudel0/postgres-mcp-safe/actions/workflows/ci.yml/badge.svg)](https://github.com/Poudel0/postgres-mcp-safe/actions/workflows/ci.yml)
 
+[![Postgres (read-only, safe) MCP server](https://mcprush.com/badge/postgres-read-only-safe-mcp/card.svg)](https://mcprush.com/to/postgres-read-only-safe-mcp?ref=badge)
+
 ## Migrating from server-postgres
 
 ```diff
