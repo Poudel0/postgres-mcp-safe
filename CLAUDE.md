@@ -7,8 +7,12 @@ Go binary, MCP over stdio, read-only enforced by Postgres itself.
 - `SPEC.md`: stack, architecture, compat contract, safety layers, bypass suite. It's the source of
   truth. When code and spec disagree, stop and ask which one is wrong.
 
-Status (2026-11-01): v1 core built and tested (PG 14, 17, 18). Name: `postgres-mcp-safe`, module
-`github.com/Poudel0/postgres-mcp-safe`. Packaging built and tested locally; nothing published yet.
+Status (2026-11-17): v1 built, tested (PG 14, 17, 18) and **released**. `v0.1.3` is live on npm
+(`postgres-mcp-safe`), ghcr.io (`ghcr.io/poudel0/postgres-mcp-safe`) and the MCP registry
+(`io.github.Poudel0/postgres-mcp-safe`). Name: `postgres-mcp-safe`, module
+`github.com/Poudel0/postgres-mcp-safe`. The release-race fix (below) rode out on v0.1.3 green.
+Next: usage is flat (~218 downloads/week vs 2,000 target, 1 star); the work left is distribution,
+not code. Lead claim is **safe by default** (refuses superuser roles), not just "read-only".
 
 ## Releasing
 
@@ -97,5 +101,6 @@ These are the product. Each one maps to a SPEC §6 layer and a bypass test.
 - go-sdk adds `ttlMs`/`cacheScope` to list results even on protocol 2024-11-05. Harmless extra fields.
 - Release race (seen on 0.1.1 and 0.1.2): npm's CDN can lag ~1 min, and an `npx` that beats the
   platform packages silently skips the missing optional package and caches a broken install.
-  `release.yml` now waits until `npm view` finds all 5 before publishing the main package. Not yet
-  proven by a real release; a timeout there burns the tag (platform packages are out), so tag anew.
+  `release.yml` now waits until `npm view` finds all 5 before publishing the main package. Proven on
+  the v0.1.3 release (ran green); a timeout there still burns the tag (platform packages are out), so
+  tag anew.
