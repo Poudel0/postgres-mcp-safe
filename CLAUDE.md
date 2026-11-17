@@ -25,7 +25,8 @@ then `node npm/build.mjs 0.0.0-snapshot`. That also lays out the MCPB bundle (Cl
 Desktop) in `npm/out/mcpb`; pack it with `npx -y @anthropic-ai/mcpb@2.1.2 pack npm/out/mcpb x.mcpb`.
 MCPB is not in `release.yml` and isn't published anywhere. Smithery is not a target: it shut down its
 accounts and CLI on 2026-10-31, and `smithery mcp publish` returned 403 on 2026-11-03. Versions in `server.json` and `npm/*/package.json` are
-placeholders stamped at release; don't bump them by hand.
+placeholders stamped at release; don't bump them by hand. `server.json`'s `description` must be
+<= 100 chars or the registry publish fails with 422 (burned v0.1.4 this way); npm has no such limit.
 
 ## Launch tracking (90 days: 2026-11-01 to 2027-01-30)
 
