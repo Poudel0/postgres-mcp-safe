@@ -42,7 +42,7 @@ for (const a of binaries) {
       {
         name,
         version,
-        description: `${platforms[a.goos]}-${archs[a.goarch]} binary for ${main.name}`,
+        description: `${platforms[a.goos]}-${archs[a.goarch]} binary for ${main.name}. Install ${main.name} instead of this package.`,
         repository: main.repository,
         license: main.license,
         os: [platforms[a.goos]],
